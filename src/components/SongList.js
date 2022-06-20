@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
+import { selectSong } from '../actions';
 
 class SongList extends Component {
   renderList() {
@@ -7,7 +8,13 @@ class SongList extends Component {
       return (
         <div className='item' key={song.title}>
           <div className='right floated content'>
-            <button className='ui button primary'>Select</button>
+            {/* passing the action creator that is mapped to props to an onClick prop on the button */}
+            <button
+              className='ui button primary'
+              onClick={() => this.props.selectSong(song)}
+            >
+              Select
+            </button>
           </div>
           <div className='content'>{song.title}</div>
         </div>
@@ -21,9 +28,13 @@ class SongList extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return { songs: state.songs };
 };
 
 // seems that the connect component  will  always connect to the provider beneath the hood.
 // the provider is passed the store and the store has the reducers passed to it
-export default connect(mapStateToProps)(SongList);
+// second argument in connect is the action selectSong. Which is imported above.
+export default connect(mapStateToProps, {
+  selectSong,
+})(SongList);
