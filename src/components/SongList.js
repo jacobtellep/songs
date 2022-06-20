@@ -7,4 +7,10 @@ class SongList extends Component {
   }
 }
 
-export default connect()(SongList);
+const mapStateToProps = (state) => {
+  return { songs: state.songs };
+};
+
+// seems that the connect component  will  always connect to the provider beneath the hood.
+// the provider is passed the store and the store has the reducers passed to it
+export default connect(mapStateToProps)(SongList);
